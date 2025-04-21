@@ -1,0 +1,40 @@
+{
+  "name": "tasktracker",
+  "version": "1.0.0",
+  "main": "src/main/main.js",
+  "type": "module",
+  "scripts": {
+    "start": "electron .",
+    "dev": "vite",
+    "build": "vite build && npm run build:preload",
+    "build:preload": "node build-preload.js",
+    "preview": "vite preview",
+    "db:init": "node src/main/db/init.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.4.1",
+    "concurrently": "^9.1.2",
+    "electron": "^35.2.0",
+    "mysql2": "^3.9.1",
+    "vite": "^6.3.2",
+    "wait-on": "^8.0.3"
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.2.0",
+    "autoprefixer": "^10.4.21",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "electron-log": "^5.3.4",
+    "lucide-react": "^0.460.0",
+    "next-themes": "^0.4.3",
+    "postcss": "^8",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "tailwind-merge": "^3.2.0",
+    "tailwindcss": "^3.4.1"
+  }
+}
