@@ -1,33 +1,31 @@
 {
   "name": "tasktracker",
   "version": "1.0.0",
-  "main": "src/main/main.js",
+  "main": "dist/main/main.js",
   "type": "module",
   "scripts": {
+    "dev": "cross-env NODE_ENV=development npm run build && npm start",
     "start": "electron .",
-    "dev": "vite",
-    "build": "vite build && npm run build:preload",
+    "build": "vite build && npm run build:preload && tsc --project tsconfig.json",
     "build:preload": "node build-preload.js",
     "preview": "vite preview",
-    "db:init": "node src/main/db/init.js"
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
-  "devDependencies": {
-    "@vitejs/plugin-react": "^4.4.1",
-    "concurrently": "^9.1.2",
-    "electron": "^35.2.0",
-    "mysql2": "^3.9.1",
-    "vite": "^6.3.2",
-    "wait-on": "^8.0.3"
-  },
   "dependencies": {
+    "@prisma/client": "^6.6.0",
     "@radix-ui/react-slot": "^1.2.0",
     "autoprefixer": "^10.4.21",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dotenv": "^16.5.0",
     "electron-log": "^5.3.4",
     "lucide-react": "^0.460.0",
     "next-themes": "^0.4.3",
@@ -36,5 +34,19 @@
     "react-dom": "^19.1.0",
     "tailwind-merge": "^3.2.0",
     "tailwindcss": "^3.4.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "@vitejs/plugin-react": "^4.4.1",
+    "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3",
+    "electron": "^35.2.0",
+    "esbuild": "^0.20.0",
+    "mysql2": "^3.14.0",
+    "prisma": "^6.6.0",
+    "typescript": "^5.3.3",
+    "vite": "^6.3.2",
+    "wait-on": "^8.0.3"
   }
 }

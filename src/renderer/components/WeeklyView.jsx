@@ -13,7 +13,6 @@ const daysOfWeek = [
 ];
 
 export function WeeklyView({ tasks, onTaskClick, onTaskComplete }) {
-  console.log(tasks);
   return (
       <div className="grid grid-cols-7 gap-4">
         {daysOfWeek.map((day) => (

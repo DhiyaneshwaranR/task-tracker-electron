@@ -20,7 +20,6 @@ export function TaskForm({ onSubmit, initialData = null }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData);
         onSubmit(formData);
     };
 

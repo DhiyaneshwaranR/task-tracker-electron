@@ -2,7 +2,7 @@
 import { build } from 'esbuild';
 
 build({
-    entryPoints: ['src/preload/preload.js'],
+    entryPoints: ['src/preload/preload.ts'],
     bundle: true,
     platform: 'node',
     format: 'cjs',

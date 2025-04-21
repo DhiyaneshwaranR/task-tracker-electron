@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2020",                 // ✅ Required for import.meta
+    "module": "ES2020",                 // ✅ Or use "node16" or "nodenext"
+    "moduleResolution": "node",         // Needed to resolve imports
+    "esModuleInterop": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "types": ["vite/client"]
+  },
+  "include": [
+    "src",
+    "src/renderer/types/global.d.ts"
+  ]
+}

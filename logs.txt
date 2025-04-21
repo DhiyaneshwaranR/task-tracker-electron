@@ -1,9 +1,0 @@
-
-> tasktracker@1.0.0 start
-> electron .
-
-Database connected successfully
-Loading from: /Users/dhiyaneshwaran/IdeaProjects/TaskTracker/dist/index.html
-Checking preload path: /Users/dhiyaneshwaran/IdeaProjects/TaskTracker/dist/preload.js
-[87256:0420/195759.158636:ERROR:CONSOLE(1)] "Request Autofill.enable failed. {"code":-32601,"message":"'Autofill.enable' wasn't found"}", source: devtools://devtools/bundled/core/protocol_client/protocol_client.js (1)
-[87256:0420/195759.158683:ERROR:CONSOLE(1)] "Request Autofill.setAddresses failed. {"code":-32601,"message":"'Autofill.setAddresses' wasn't found"}", source: devtools://devtools/bundled/core/protocol_client/protocol_client.js (1)

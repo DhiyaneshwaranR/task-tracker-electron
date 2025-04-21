@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Task {
+  task_id    Int       @id @default(autoincrement())
+  task_name  String
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  schedule   Schedule[]
+}
+
+model Schedule {
+  id         Int      @id @default(autoincrement())
+  dayOfWeek  Int
+  startTime  String
+  endTime    String
+  task       Task     @relation(fields: [taskId], references: [task_id])
+  taskId     Int
+}
