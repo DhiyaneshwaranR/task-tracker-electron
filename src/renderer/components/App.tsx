@@ -2,14 +2,20 @@
 import React, { useState, useEffect } from 'react';
 import MonthlyCalendar from './MonthlyCalendar';
 import { Task } from '../../main/models/Task';
-import {ChevronLeft, ChevronRight} from "lucide-react"; // or from @prisma/client
+import {ChevronLeft, ChevronRight} from "lucide-react";
 import { Button } from './ui/Button';
+import Sidebar from "./Sidebar";
+import Dashboard from "./Dashboard";
 
 export default function App() {
     const [tasks, setTasks] = useState<Task[]>([]);
-
-    const [visibleMonth, setVisibleMonth] = useState(3); // April = 3 (0-based)
+    const [activeTab, setActiveTab] = useState('calendar');
+    const [visibleMonth, setVisibleMonth] = useState(3); // April
     const [visibleYear, setVisibleYear] = useState(2025);
+
+    useEffect(() => {
+        window.electronAPI.getAllTasks().then(setTasks);
+    }, []);
 
     const goToPreviousMonth = () => {
         if (visibleYear === 2025 && visibleMonth === 3) return;
@@ -44,34 +50,29 @@ export default function App() {
     }, []);
 
     return (
-        <div className="h-screen w-full overflow-hidden px-4 py-6 flex flex-col">
-            {/* Title */}
-            <h1 className="text-2xl font-bold mb-6">📅 Task Tracker</h1>
+        <div className="h-screen w-full flex overflow-hidden">
+            <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
 
-            {/* Month Nav Row */}
-            <div className="flex justify-center items-center gap-2 mb-4">
-                <Button variant="ghost" onClick={goToPreviousMonth} disabled={visibleMonth === 3 && visibleYear === 2025}>
-                    <ChevronLeft className="w-5 h-5" />
-                </Button>
+            <div className="flex-1 flex flex-col px-4 py-6 overflow-auto">
+                {activeTab === 'dashboard' && <Dashboard tasks={tasks} />}
+                {activeTab === 'calendar' && (
+                    <>
+                        <div className="flex justify-center items-center gap-2 mb-4">
+                            <Button variant="ghost" onClick={goToPreviousMonth}><ChevronLeft /></Button>
+                            <div className="text-lg ">
+                                {new Date(visibleYear, visibleMonth).toLocaleString('default', {
+                                    month: 'long',
+                                    year: 'numeric',
+                                })}
+                            </div>
+                            <Button variant="ghost" onClick={goToNextMonth}><ChevronRight /></Button>
+                        </div>
+                        <MonthlyCalendar tasks={tasks} year={visibleYear} month={visibleMonth} />
+                    </>
+                )}
 
-                <div className="text-xl font-semibold">
-                    {new Date(visibleYear, visibleMonth).toLocaleString('default', {
-                        month: 'long',
-                        year: 'numeric',
-                    })}
-                </div>
-
-                <Button variant="ghost" onClick={goToNextMonth}>
-                    <ChevronRight className="w-5 h-5" />
-                </Button>
+                {/*{activeTab === 'meals' && </>}*/}
             </div>
-
-            {/* Calendar Grid */}
-            <MonthlyCalendar
-                tasks={tasks}
-                year={visibleYear}
-                month={visibleMonth}
-            />
         </div>
 
     );

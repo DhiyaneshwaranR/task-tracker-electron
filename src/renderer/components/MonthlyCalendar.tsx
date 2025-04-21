@@ -84,7 +84,6 @@ export default function MonthlyCalendar({ tasks, month, year }: MonthlyCalendarP
                 ))}
             </div>
 
-            {/* 🧱 Main calendar body fills remaining space */}
             <div className="grid grid-cols-7 flex-1 text-sm bg-border border border-border">
                 {days.map(({ date, isCurrentMonth }, idx) => {
                     const dayTasks = getTasksForDate(date);

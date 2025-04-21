@@ -1,5 +1,5 @@
-import { prisma } from '../db/prisma.js';
-import { Task, Schedule } from '@prisma/client';
+import {prisma} from '../db/prisma.js';
+import {Schedule, Task} from '@prisma/client';
 
 export class TaskService {
     async createTask(taskName: string): Promise<Task> {
@@ -49,12 +49,11 @@ export class TaskService {
 
     async getAllTasks(): Promise<(Task & { schedule: Schedule[] })[]> {
         try {
-            const tasks = await prisma.task.findMany({
-                include: { schedule: true },
-                orderBy: { task_id: 'asc' }
+            // console.info(` Retrieved ${tasks.length} tasks`);
+            return await prisma.task.findMany({
+                include: {schedule: true},
+                orderBy: {task_id: 'asc'}
             });
-            console.log(` Retrieved ${tasks.length} tasks`);
-            return tasks;
         } catch (error: any) {
             console.error(' Error in getAllTasks:', error);
             throw new Error('Failed to retrieve tasks');
