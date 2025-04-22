@@ -1,6 +1,6 @@
-// src/renderer/components/TaskForm.jsx
 import React, { useState } from 'react';
 import { Button } from './ui/Button';
+import { Task, ScheduleInput } from '../../main/models/Task'; // Make sure this path is correct
 
 const daysOfWeek = [
     { id: 1, name: 'Monday' },
@@ -12,28 +12,50 @@ const daysOfWeek = [
     { id: 7, name: 'Sunday' },
 ];
 
-export function TaskForm({ onSubmit, initialData = null }) {
-    const [formData, setFormData] = useState({
-        taskName: initialData?.taskName || '',
-        schedule: initialData?.schedule || [],
+interface TaskFormProps {
+    onSubmit: (formData: { taskName: string; schedule: ScheduleInput[] }) => void;
+    initialData?: Task;
+}
+
+export function TaskForm({ onSubmit, initialData }: TaskFormProps) {
+    const [formData, setFormData] = useState<{
+        taskName: string;
+        schedule: ScheduleInput[];
+    }>({
+        taskName: initialData?.task_name || '',
+        schedule:
+            initialData?.schedule?.map(({ dayOfWeek, startTime, endTime }) => ({
+                dayOfWeek,
+                startTime,
+                endTime,
+            })) || [],
     });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         onSubmit(formData);
     };
 
-    const toggleDay = (dayId) => {
-        const daySchedule = formData.schedule.find(s => s.dayOfWeek === dayId);
-        if (daySchedule) {
+    const toggleDay = (dayId: number) => {
+        const exists = formData.schedule.find((s) => s.dayOfWeek === dayId);
+
+        if (exists) {
             setFormData({
                 ...formData,
-                schedule: formData.schedule.filter(s => s.dayOfWeek !== dayId),
+                schedule: formData.schedule.filter((s) => s.dayOfWeek !== dayId),
             });
         } else {
+            const updatedSchedule = [
+                ...formData.schedule,
+                {
+                    dayOfWeek: dayId,
+                    startTime: '09:00',
+                    endTime: '17:00',
+                },
+            ];
             setFormData({
                 ...formData,
-                schedule: [...formData.schedule, { dayOfWeek: dayId, startTime: '09:00', endTime: '17:00' }],
+                schedule: updatedSchedule,
             });
         }
     };
@@ -58,7 +80,11 @@ export function TaskForm({ onSubmit, initialData = null }) {
                         <Button
                             key={day.id}
                             type="button"
-                            variant={formData.schedule.some(s => s.dayOfWeek === day.id) ? 'default' : 'outline'}
+                            variant={
+                                formData.schedule.some((s) => s.dayOfWeek === day.id)
+                                    ? 'default'
+                                    : 'outline'
+                            }
                             onClick={() => toggleDay(day.id)}
                         >
                             {day.name}
@@ -75,12 +101,12 @@ export function TaskForm({ onSubmit, initialData = null }) {
                             type="time"
                             value={schedule.startTime}
                             onChange={(e) => {
-                                const updatedSchedule = formData.schedule.map(s =>
+                                const updated = formData.schedule.map((s) =>
                                     s.dayOfWeek === schedule.dayOfWeek
                                         ? { ...s, startTime: e.target.value }
                                         : s
                                 );
-                                setFormData({ ...formData, schedule: updatedSchedule });
+                                setFormData({ ...formData, schedule: updated });
                             }}
                             className="mt-1 block rounded-md border border-input px-3 py-2"
                         />
@@ -91,12 +117,12 @@ export function TaskForm({ onSubmit, initialData = null }) {
                             type="time"
                             value={schedule.endTime}
                             onChange={(e) => {
-                                const updatedSchedule = formData.schedule.map(s =>
+                                const updated = formData.schedule.map((s) =>
                                     s.dayOfWeek === schedule.dayOfWeek
                                         ? { ...s, endTime: e.target.value }
                                         : s
                                 );
-                                setFormData({ ...formData, schedule: updatedSchedule });
+                                setFormData({ ...formData, schedule: updated });
                             }}
                             className="mt-1 block rounded-md border border-input px-3 py-2"
                         />

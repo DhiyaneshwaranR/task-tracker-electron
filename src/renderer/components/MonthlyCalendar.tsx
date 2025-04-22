@@ -72,10 +72,6 @@ export default function MonthlyCalendar({ tasks, month, year }: MonthlyCalendarP
 
     return (
         <div className="flex flex-col h-full">
-            {/*<div className="text-xl font-semibold mb-4 text-center">*/}
-            {/*    {current.toLocaleString('default', { month: 'long' })} {current.getFullYear()}*/}
-            {/*</div>*/}
-
             <div className="grid grid-cols-7 gap-px text-sm font-medium text-center bg-border border border-border">
                 {daysOfWeek.map((d) => (
                     <div key={d} className="py-2 bg-background text-muted-foreground">
@@ -110,10 +106,9 @@ export default function MonthlyCalendar({ tasks, month, year }: MonthlyCalendarP
 
                                     return (
                                         <div key={task.task_id} className="flex items-center gap-1 text-xs">
-                                            <div
-                                                className={cn('w-1.5 h-4 rounded-full', getColorForTask(task.task_id))}
-                                            />
+                                            <div className={cn('w-1.5 h-4 rounded-full', getColorForTask(task.task_id))} />
                                             <div className="truncate">{task.task_name}</div>
+
                                             {schedule?.startTime && (
                                                 <div className="text-[10px] text-muted-foreground ml-auto">
                                                     {formatTime(schedule.startTime)}
