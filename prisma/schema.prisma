@@ -7,19 +7,48 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum TaskType {
+  TIMER // start/stop only
+  NUMBER // ask for number
+  TEXT // ask for description
+  SELECT // choose from options
+}
+
 model Task {
-  task_id    Int       @id @default(autoincrement())
+  task_id    Int      @id @default(autoincrement())
   task_name  String
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  schedule   Schedule[]
+  type       TaskType @default(TIMER)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  schedule Schedule[]
+  sessions TaskSession[]
 }
 
 model Schedule {
-  id         Int      @id @default(autoincrement())
-  dayOfWeek  Int
-  startTime  String
-  endTime    String
-  task       Task     @relation(fields: [taskId], references: [task_id])
-  taskId     Int
+  id        Int    @id @default(autoincrement())
+  dayOfWeek Int
+  startTime String
+  endTime   String
+
+  task   Task @relation(fields: [taskId], references: [task_id])
+  taskId Int
+}
+
+model TaskSession {
+  id     Int  @id @default(autoincrement())
+  taskId Int
+  task   Task @relation(fields: [taskId], references: [task_id])
+
+  date      DateTime  @default(now())
+  startTime DateTime
+  endTime   DateTime?
+  duration  Int?
+
+  numericInput   Int?
+  textInput      String?
+  optionSelected String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

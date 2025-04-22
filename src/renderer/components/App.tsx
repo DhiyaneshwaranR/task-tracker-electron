@@ -4,12 +4,12 @@ import MonthlyCalendar from './MonthlyCalendar';
 import { Task } from '../../main/models/Task';
 import {ChevronLeft, ChevronRight} from "lucide-react";
 import { Button } from './ui/Button';
-import Sidebar from "./Sidebar";
-import Dashboard from "./Dashboard";
+import Sidebar from "./ui/Sidebar";
+import Dashboard from "./dashboard/Dashboard";
 
 export default function App() {
     const [tasks, setTasks] = useState<Task[]>([]);
-    const [activeTab, setActiveTab] = useState('calendar');
+    const [activeTab, setActiveTab] = useState('dashboard');
     const [visibleMonth, setVisibleMonth] = useState(3); // April
     const [visibleYear, setVisibleYear] = useState(2025);
 

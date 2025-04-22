@@ -3,6 +3,7 @@ import { app, BrowserWindow } from 'electron';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import { registerTaskIpcHandlers } from './ipc/taskHandlers.js';
+import {registerTaskSessionHandlers} from "./ipc/taskSessionHandler.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -30,6 +31,7 @@ async function createWindow() {
 
 app.whenReady().then(() => {
     registerTaskIpcHandlers();
+    registerTaskSessionHandlers();
     createWindow();
 });
 

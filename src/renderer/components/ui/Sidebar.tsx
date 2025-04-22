@@ -1,8 +1,7 @@
-// src/renderer/components/Sidebar.tsx
 import React from 'react';
 import { CalendarDays, HandPlatter, Gauge } from 'lucide-react';
-import { Button } from './ui/Button';
-import { cn } from '../lib/utils';
+import { Button } from './Button';
+import { cn } from '../../lib/utils';
 
 interface SidebarProps {
     activeTab: string;
@@ -42,9 +41,14 @@ function SidebarButton({
 }) {
     return (
         <Button
-            variant={active ? 'secondary' : 'ghost'}
+            variant="ghost"
             size="icon"
-            className={cn('rounded-md', active && 'bg-accent text-primary')}
+            className={cn(
+                'rounded-md',
+                active
+                    ? 'bg-gray-800 text-white hover:bg-gray-800 hover:text-white' // disable hover override
+                    : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+            )}
             onClick={onClick}
         >
             {icon}
